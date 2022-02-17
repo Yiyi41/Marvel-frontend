@@ -1,1 +1,10 @@
 /* Reset rules */
+* {
+  box-sizing: border-box;
+}
+.container {
+  max-width: 100%;
+  background-color: black;
+  margin: 0 auto;
+  color: white;
+}

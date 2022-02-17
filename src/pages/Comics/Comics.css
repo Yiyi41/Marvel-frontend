@@ -1,0 +1,10 @@
+.comicsContainer {
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+
+.comicCard img {
+  height: 400px;
+  width: 300px;
+  object-fit: contain;
+}
