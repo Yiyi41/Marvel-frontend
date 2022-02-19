@@ -1,0 +1,34 @@
+.header {
+  background-color: black;
+  margin: 0 auto;
+  height: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  /* align-items: center; */
+}
+.logo-img {
+  /* background-color: black; */
+  margin: 0 auto;
+}
+
+.logo-img img {
+  height: 200px;
+  margin-top: 20px;
+}
+.btn-header {
+  display: flex;
+  gap: 20px;
+  justify-content: space-evenly;
+  margin: 10px 30px;
+}
+.btn-header button {
+  height: 40px;
+  width: 150px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: medium;
+}
