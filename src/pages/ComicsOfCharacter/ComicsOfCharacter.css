@@ -1,0 +1,28 @@
+/* same rules with comics page except the rules below*/
+
+.listComicsOfCharacterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  /* border: solid green 3px; */
+}
+/* 
+.comicCard {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 400px;
+  margin: 20px;
+  border: 3px red solid;
+} */
+
+.comicImg-container img {
+  height: 350px;
+  width: 280px;
+}
+
+.comic-title {
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}

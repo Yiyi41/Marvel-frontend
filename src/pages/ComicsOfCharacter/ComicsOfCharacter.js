@@ -30,8 +30,8 @@ const ComicsOfCharacter = () => {
       <div className="listComicsOfCharacterContainer">
         {data.map((comic, index) => {
           return (
-            <div key={comic._id}>
-              <div>
+            <div key={comic._id} className="comicCard">
+              <div className="comicImg-container">
                 {comic.thumbnail.path ? (
                   <img
                     src={comic.thumbnail.path + "." + comic.thumbnail.extension}
@@ -42,7 +42,7 @@ const ComicsOfCharacter = () => {
                 )}
               </div>
               {comic.title ? (
-                <div>{comic.title}</div>
+                <div className="comic-title">{comic.title}</div>
               ) : (
                 <div>Non Renseigné</div>
               )}

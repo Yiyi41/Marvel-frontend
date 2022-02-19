@@ -1,38 +1,57 @@
-.search-input {
+.search-container {
+  margin: 0 auto;
   padding: 15px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.search-input {
+  padding: 10px;
   width: 500px;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 15px;
   border: none;
-  background-color: black;
+  background-color: red;
   color: aliceblue;
   text-align: center;
   font-size: medium;
 }
-.charactersContainer {
-  display: flex;
-  flex-wrap: wrap;
+
+.search-input::placeholder {
+  color: aliceblue;
+  opacity: 1;
 }
 
-.characterCard {
+.search-input:placeholder-shown {
+  border: none;
+}
+
+.charactersContainer,
+.comicsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.characterCard,
+.comicCard {
   position: relative;
   flex: 25%;
   display: flex;
-  height: 400px;
   width: 400px;
-  border: greenyellow solid;
+  height: 360px;
+  /* border: greenyellow solid; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: black;
-  font-size: larger;
 }
 
 .description-container {
   position: absolute;
   text-align: center;
   font-size: 20px;
-  line-height: 25px;
+  line-height: 20px;
   background-color: rgba(0, 0, 0, 0.5);
   color: aliceblue;
   border: none;
@@ -41,7 +60,8 @@
   opacity: 0;
 }
 
-.characterCard .description-container:hover {
+.characterCard .description-container:hover,
+.comicCard .description-container:hover {
   opacity: 1;
 }
 
@@ -52,23 +72,34 @@
 .characterImg-container img {
   height: 100%;
   width: 100%;
+  /* object-fit: ; */
 }
-.character-name {
-  padding: 20px;
+
+.character-name,
+.comic-title {
+  padding: 10px;
   font-weight: bold;
+  text-align: center;
 }
+
 .pagination-container {
+  margin-top: 50px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   padding: 20px;
+  flex-direction: row;
+  align-items: center;
 }
 
 .pagination-container p {
+  width: 40px;
+  height: 40px;
   font-size: 20px;
   background-color: black;
   color: aliceblue;
   padding: 10px;
-  border-radius: 70%;
+  border-radius: 50%;
+  text-align: center;
 }
 
 .pagination-container button {
@@ -78,4 +109,7 @@
   font-size: 15px;
   padding: 10px;
   border-radius: 10px;
+  margin: 10px 10px;
+  width: 100px;
+  cursor: pointer;
 }

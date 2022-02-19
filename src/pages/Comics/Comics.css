@@ -1,10 +1,16 @@
-.comicsContainer {
-  /* display: flex;
-  flex-wrap: wrap; */
+/* same rules with Characters page except below rules */
+
+.comicImg-container img {
+  height: 350px;
+  width: 280px;
 }
 
-.comicCard img {
+.description-container {
+  font-size: 18px;
+}
+
+.comicCard {
+  width: 400px;
   height: 400px;
-  width: 300px;
-  object-fit: contain;
+  margin-bottom: 5px;
 }

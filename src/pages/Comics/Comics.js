@@ -1,3 +1,4 @@
+import "../Characters/Characters-Comics.css";
 import "./Comics.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -6,12 +7,14 @@ const Comics = () => {
   const [data, setData] = useState();
   const [isLoading, setIsloading] = useState(true);
   const [search, setSearch] = useState("");
+  const limit = 100;
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/comics?title=${search}`
+          `http://localhost:3000/comics?title=${search}&page=${pageNumber}&limit=${limit}`
         );
         // console.log(response.data);
         setData(response.data);
@@ -21,24 +24,28 @@ const Comics = () => {
       }
     };
     fetchData();
-  }, [search]);
+  }, [search, pageNumber, limit]);
   return isLoading ? (
     <div>En cours de chargement...</div>
   ) : (
     <div className="container">
-      <input
-        type="text"
-        placeholder="Recherche"
-        value={search}
-        onChange={(event) => {
-          setSearch(event.target.value);
-        }}
-      />
+      <div className="search-container">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Recherche"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
+        />
+      </div>
+
       <div className="comicsContainer">
         {data.results.map((comic, index) => {
           return (
             <div key={comic._id} className="comicCard">
-              <div>
+              <div className="comicImg-container">
                 {comic.thumbnail.path ? (
                   <img
                     src={comic.thumbnail.path + "." + comic.thumbnail.extension}
@@ -48,25 +55,40 @@ const Comics = () => {
                   <p>No picture</p>
                 )}
               </div>
-              {comic.title ? <p>{comic.title}</p> : <p>Non renseigné</p>}
-              {comic.description ? (
-                <p>{comic.description}</p>
+
+              {comic.title ? (
+                <div className="comic-title">{comic.title}</div>
               ) : (
-                // <button
-                //   onClick={() => {
-                //     <p>{comic.description}</p>;
-                //   }}
-                // >
-                //   Description
-                // </button>
                 <p>Non renseigné</p>
+              )}
+              {comic.description ? (
+                <div className="description-container">{comic.description}</div>
+              ) : (
+                <div className="description-container">
+                  Description non Renseigné
+                </div>
               )}
             </div>
           );
         })}
       </div>
-      <button>Page suivante</button>
-      <button>Page précédente</button>
+      <div className="pagination-container">
+        <button
+          onClick={() => {
+            pageNumber > 1 && setPageNumber(pageNumber - 1);
+          }}
+        >
+          Précédent
+        </button>
+        <p>{pageNumber}</p>
+        <button
+          onClick={() => {
+            setPageNumber(pageNumber + 1);
+          }}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 };

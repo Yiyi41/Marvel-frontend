@@ -1,4 +1,4 @@
-import "./Characters.css";
+import "./Characters-Comics.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -29,15 +29,17 @@ const Characters = () => {
     <div>En cours de chargement...</div>
   ) : (
     <div className="container">
-      <input
-        className="search-input"
-        type="text"
-        placeholder="Recherche"
-        value={search}
-        onChange={(event) => {
-          setSearch(event.target.value);
-        }}
-      />
+      <div className="search-container">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="RECHERCHE"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
+        />
+      </div>
       <div className="charactersContainer">
         {data.results.map((character, index) => {
           return (
