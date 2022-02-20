@@ -14,3 +14,14 @@
   height: 400px;
   margin-bottom: 5px;
 }
+
+.favStar {
+  color: red;
+  font-size: 1em;
+  color: #ed1c24;
+}
+
+.nonFavStar {
+  color: black;
+  font-size: 1em;
+}

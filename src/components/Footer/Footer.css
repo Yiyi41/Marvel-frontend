@@ -1,0 +1,13 @@
+.footer {
+  padding: 10px;
+  text-align: center;
+  padding: 10px;
+  background-color: rosybrown;
+  font-size: medium;
+  font-size: 15px;
+  color: aliceblue;
+}
+
+.footer > span {
+  color: green;
+}

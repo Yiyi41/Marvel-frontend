@@ -11,7 +11,7 @@
   margin: 10px;
   border-radius: 15px;
   border: none;
-  background-color: red;
+  background-color: #ed1c24;
   color: aliceblue;
   text-align: center;
   font-size: medium;
@@ -31,6 +31,17 @@
   display: flex;
   flex-wrap: wrap;
   margin: 10px;
+  position: relative;
+}
+
+.charactersContainer .icon {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 1.2em;
+  color: #ed1c24;
+  /* top: 20px;
+  right: 30px; */
 }
 
 .characterCard,
@@ -111,5 +122,17 @@
   border-radius: 10px;
   margin: 10px 10px;
   width: 100px;
+  cursor: pointer;
+}
+.favStar {
+  color: red;
+  font-size: 1em;
+  color: #ed1c24;
+  cursor: pointer;
+}
+
+.nonFavStar {
+  color: black;
+  font-size: 1em;
   cursor: pointer;
 }

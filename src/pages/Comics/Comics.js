@@ -2,6 +2,8 @@ import "../Characters/Characters-Comics.css";
 import "./Comics.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Cookies from "js-cookie";
 
 const Comics = () => {
   const [data, setData] = useState();
@@ -9,6 +11,51 @@ const Comics = () => {
   const [search, setSearch] = useState("");
   const limit = 100;
   const [pageNumber, setPageNumber] = useState(1);
+  const [torefresh, setToRefresh] = useState(false);
+
+  const isInFavoriteComics = (id) => {
+    let favoriteComicsStr = "";
+    favoriteComicsStr = Cookies.get("favoriteComics");
+    if (favoriteComicsStr === undefined) return false;
+    let tabFavoriteComics = [];
+    tabFavoriteComics = favoriteComicsStr.split("^^");
+    for (let i = 0; i < tabFavoriteComics.length; i++) {
+      if (tabFavoriteComics[i] === id) return true;
+    }
+    return false;
+  };
+  const addToFavoriteComics = (id) => {
+    let favoriteComicsStr = "";
+    favoriteComicsStr = Cookies.get("favoriteComics");
+    if (favoriteComicsStr === undefined) favoriteComicsStr = "";
+    let tabFavoriteComics = favoriteComicsStr.split("^^");
+    for (let i = 0; i < tabFavoriteComics.length; i++) {
+      if (tabFavoriteComics[i] === id) return;
+    }
+    if (favoriteComicsStr !== "") {
+      favoriteComicsStr += "^^";
+    }
+    favoriteComicsStr += id;
+    Cookies.set("favoriteComics", favoriteComicsStr);
+    setToRefresh(!torefresh);
+  };
+  const removeFromFavoriteComics = (id) => {
+    let favoriteComicsStr = "";
+    favoriteComicsStr = Cookies.get("favoriteComics");
+    if (favoriteComicsStr === undefined) return false;
+    let tabFavoriteComics = favoriteComicsStr.split("^^");
+    let newTabFavoriteComics = "";
+    for (let i = 0; i < tabFavoriteComics.length; i++) {
+      if (tabFavoriteComics[i] !== id) {
+        if (newTabFavoriteComics !== "") {
+          newTabFavoriteComics += "^^";
+        }
+        newTabFavoriteComics += tabFavoriteComics[i];
+      }
+    }
+    Cookies.set("favoriteComics", newTabFavoriteComics);
+    setToRefresh(!torefresh);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +103,17 @@ const Comics = () => {
                 )}
               </div>
 
+              <FontAwesomeIcon
+                icon="fa-solid fa-star"
+                className={
+                  isInFavoriteComics(comic._id) ? "favStar" : "nonFavStar"
+                }
+                onClick={() => {
+                  isInFavoriteComics(comic._id)
+                    ? removeFromFavoriteComics(comic._id)
+                    : addToFavoriteComics(comic._id);
+                }}
+              />
               {comic.title ? (
                 <div className="comic-title">{comic.title}</div>
               ) : (

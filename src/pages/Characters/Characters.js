@@ -2,6 +2,8 @@ import "./Characters-Comics.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Cookies from "js-cookie";
 
 const Characters = () => {
   const [data, setData] = useState();
@@ -9,6 +11,53 @@ const Characters = () => {
   const [search, setSearch] = useState("");
   const limit = 100;
   const [pageNumber, setPageNumber] = useState(1);
+  const [torefresh, setToRefresh] = useState(false);
+
+  const isInFavoriteCharacters = (id) => {
+    let favoriteCharactersStr = "";
+    favoriteCharactersStr = Cookies.get("favoriteCharacters");
+    if (favoriteCharactersStr === undefined) return false;
+    let tabFavoriteCharacters = [];
+    tabFavoriteCharacters = favoriteCharactersStr.split("^^");
+    for (let i = 0; i < tabFavoriteCharacters.length; i++) {
+      if (tabFavoriteCharacters[i] === id) return true;
+    }
+    return false;
+  };
+
+  const addToFavoriteCharacters = (id) => {
+    let favoriteCharactersStr = "";
+    favoriteCharactersStr = Cookies.get("favoriteCharacters");
+    if (favoriteCharactersStr === undefined) favoriteCharactersStr = "";
+    let tabFavoriteCharacters = favoriteCharactersStr.split("^^");
+    for (let i = 0; i < tabFavoriteCharacters.length; i++) {
+      if (tabFavoriteCharacters[i] === id) return;
+    }
+    if (favoriteCharactersStr !== "") {
+      favoriteCharactersStr += "^^";
+    }
+    favoriteCharactersStr += id;
+    Cookies.set("favoriteCharacters", favoriteCharactersStr);
+    setToRefresh(!torefresh);
+  };
+
+  const removeFromFavoriteCharacters = (id) => {
+    let favoriteCharactersStr = "";
+    favoriteCharactersStr = Cookies.get("favoriteCharacters");
+    if (favoriteCharactersStr === undefined) return false;
+    let tabFavoriteCharacters = favoriteCharactersStr.split("^^");
+    let newTabFavoriteCharacters = "";
+    for (let i = 0; i < tabFavoriteCharacters.length; i++) {
+      if (tabFavoriteCharacters[i] !== id) {
+        if (newTabFavoriteCharacters !== "") {
+          newTabFavoriteCharacters += "^^";
+        }
+        newTabFavoriteCharacters += tabFavoriteCharacters[i];
+      }
+    }
+    Cookies.set("favoriteCharacters", newTabFavoriteCharacters);
+    setToRefresh(!torefresh);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,26 +93,37 @@ const Characters = () => {
         {data.results.map((character, index) => {
           return (
             //le chemin: comics/:id, il attend id du personnage, ici je lui passe à chaque tour de .map
-            <Link
-              className="characterCard"
-              key={character._id}
-              to={"/comics/" + character._id}
-            >
-              <div className="characterImg-container">
-                {/* <i class="fa-regular fa-heart"></i> */}
-                {character.thumbnail.path ? (
-                  <img
-                    src={
-                      character.thumbnail.path +
-                      "." +
-                      character.thumbnail.extension
-                    }
-                    alt=""
-                  />
-                ) : (
-                  <p>No picture</p>
-                )}
-              </div>
+            <div className="characterCard" key={character._id}>
+              <Link to={"/comics/" + character._id}>
+                <div className="characterImg-container">
+                  {character.thumbnail.path ? (
+                    <img
+                      src={
+                        character.thumbnail.path +
+                        "." +
+                        character.thumbnail.extension
+                      }
+                      alt=""
+                    />
+                  ) : (
+                    <p>No picture</p>
+                  )}
+                </div>
+              </Link>
+
+              <FontAwesomeIcon
+                icon="fa-solid fa-star"
+                className={
+                  isInFavoriteCharacters(character._id)
+                    ? "favStar"
+                    : "nonFavStar"
+                }
+                onClick={() => {
+                  isInFavoriteCharacters(character._id)
+                    ? removeFromFavoriteCharacters(character._id)
+                    : addToFavoriteCharacters(character._id);
+                }}
+              />
               {character.name ? (
                 <div className="character-name">{character.name}</div>
               ) : (
@@ -78,7 +138,7 @@ const Characters = () => {
                   Description non Renseigné
                 </div>
               )}
-            </Link>
+            </div>
           );
         })}
       </div>
