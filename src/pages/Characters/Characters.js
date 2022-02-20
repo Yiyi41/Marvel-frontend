@@ -63,7 +63,7 @@ const Characters = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/characters?name=${search}&page=${pageNumber}&limit=${limit}`
+          `https://my-marvel-backend-project.herokuapp.com/characters?name=${search}&page=${pageNumber}&limit=${limit}`
         );
         // console.log(response.data.results[0]); //recois bien la data
         setData(response.data);

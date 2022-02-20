@@ -12,7 +12,9 @@ const ComicsOfCharacter = () => {
     const fetchData = async () => {
       try {
         //j'envoie ma requête à vers serveur local avec l'id que j'ai récupéré ici avec useParams
-        const response = await axios.get(`http://localhost:3000/comics/${id}`);
+        const response = await axios.get(
+          `https://my-marvel-backend-project.herokuapp.com/comics/${id}`
+        );
         // console.log(id);
         // console.log(response.data.comics);
         setData(response.data.comics);
